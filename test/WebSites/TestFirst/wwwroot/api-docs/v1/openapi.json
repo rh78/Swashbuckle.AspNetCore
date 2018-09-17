@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "V1 API",
+    "version": "V1"
+  },
+  "paths": {
+    "/api/products": {
+      "post": {
+        "description": "Creates a new product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid content"
+          },
+          "201": {
+            "description": "Product created",
+            "headers": {
+              "Location": {
+                "required": true
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves products",
+        "parameters": [
+          {
+            "name": "pageNo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "description": "Retrieves a specific product",
+        "responses": {
+          "404": {
+            "description": "Product not found"
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/product"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a specific product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Product not found"
+          },
+          "400": {
+            "description": "Invalid content"
+          },
+          "204": {
+            "description": "Product updated"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a specific product",
+        "responses": {
+          "404": {
+            "description": "Product not found"
+          },
+          "204": {
+            "description": "Product deleted"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "product": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

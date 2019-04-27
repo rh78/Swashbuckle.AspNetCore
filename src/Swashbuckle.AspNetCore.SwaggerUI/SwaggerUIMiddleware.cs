@@ -67,7 +67,7 @@ namespace Swashbuckle.AspNetCore.SwaggerUI
                 return;
             }
 
-            await _staticFileMiddleware.Invoke(httpContext);
+            await _staticFileMiddleware.Invoke(httpContext).ConfigureAwait(false);
         }
 
         private void RespondWithRedirect(HttpResponse response, string location)

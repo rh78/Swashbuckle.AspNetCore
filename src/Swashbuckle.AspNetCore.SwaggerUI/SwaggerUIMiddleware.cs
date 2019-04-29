@@ -63,7 +63,8 @@ namespace Swashbuckle.AspNetCore.SwaggerUI
 
             if (httpMethod == "GET" && Regex.IsMatch(path, $"/{_options.RoutePrefix}/?index.html"))
             {
-                await RespondWithIndexHtml(httpContext.Response);
+                await RespondWithIndexHtml(httpContext.Response).ConfigureAwait(false);
+
                 return;
             }
 
@@ -90,7 +91,7 @@ namespace Swashbuckle.AspNetCore.SwaggerUI
                     htmlBuilder.Replace(entry.Key, entry.Value);
                 }
 
-                await response.WriteAsync(htmlBuilder.ToString(), Encoding.UTF8);
+                await response.WriteAsync(htmlBuilder.ToString(), Encoding.UTF8).ConfigureAwait(false);
             }
         }
 
